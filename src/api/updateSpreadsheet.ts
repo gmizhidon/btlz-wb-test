@@ -3,6 +3,7 @@ import process from "process";
 import { google } from "googleapis";
 import { getSpreadsheetIds } from "#db/getSpreadsheetIds.js";
 import { getBoxTarrifs } from "#db/getBoxTarrifs.js";
+import { date } from "zod";
 
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
 const SERVICE_KEY_PATH = path.join(process.cwd(), "service-key.json");
@@ -16,7 +17,12 @@ export async function updateSpreadsheet() {
 
     const sheets = google.sheets({version: "v4", auth});
 
-    const boxTarrifs = await getBoxTarrifs();
+    const boxTarrifs = (await getBoxTarrifs()).map(tarrif => ({
+        ...tarrif,
+        date: tarrif.date.toISOString().split('T')[0],
+        dt_next_box: tarrif.dt_next_box ? tarrif.dt_next_box.toISOString().split('T')[0] : null,
+        dt_till_max: tarrif.dt_till_max ? tarrif.dt_till_max.toISOString().split('T')[0] : null,
+    }));
 
     if (boxTarrifs.length === 0) {
         return;
