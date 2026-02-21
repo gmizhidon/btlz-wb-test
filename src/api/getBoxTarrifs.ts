@@ -29,7 +29,7 @@ interface IGetBoxTarrifsQueryParams {
     date: string
 }
 
-export async function getBoxTarrifs({ date }: IGetBoxTarrifsQueryParams): Promise<IGetBoxTarrifsData | void> {
+export async function getBoxTarrifs({ date }: IGetBoxTarrifsQueryParams): Promise<IGetBoxTarrifsData> {
     try {
         const params = new URLSearchParams();
         params.append("date", date);
@@ -41,11 +41,21 @@ export async function getBoxTarrifs({ date }: IGetBoxTarrifsQueryParams): Promis
             },
         });
         if (!response.ok) {
+            if (response.status === 400) {
+                throw new Error(`Неверный запрос: ${response.status}`);
+            }
+            if (response.status === 401) {
+                throw new Error(`Ошибка авторизации: ${response.status}`);
+            }
+            if (response.status === 429) {
+                throw new Error(`Превышен лимит запросов: ${response.status}`);
+            }
             throw new Error(`Ошибка HTTP: ${response.status}`);
         };
         const validatedResponse = responseSchema.parse(await response.json());
         return validatedResponse.response.data;
-    } catch (error) {
-        console.error('Ошибка запроса:', error);
+    } catch (e) {
+        console.error("Error fetching box tarrifs:", e);
+        throw e;
     }
 }

@@ -2,3 +2,5 @@ node_modules
 .local
 .env
 dist
+service-key.json
+spreadsheets.json
