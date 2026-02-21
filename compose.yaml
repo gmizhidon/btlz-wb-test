@@ -79,3 +79,6 @@ services:
 
     command: [ "npm", "run", "start" ]
     restart: unless-stopped
+    volumes:
+      - ./service-key.json:/app/service-key.json
+      - ./spreadsheets.json:/app/spreadsheets.json

@@ -22,5 +22,3 @@ WORKDIR /app
 COPY --from=build /app/package*.json .
 COPY --from=deps-prod /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/service-key.json ./service-key.json
-COPY --from=build /app/spreadsheets.json ./spreadsheets.json
