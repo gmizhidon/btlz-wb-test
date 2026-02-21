@@ -1,8 +1,11 @@
 # btlz-wb-test
 
 ## Описание
-Для запуска надо добавить в env переменные POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, APP_PORT, WB_API_KEY
-В директорию проекта добавить файлы service-key.json(сервисынй ключ google api), spreadsheets.json(массив айди гугл таблиц в формате string[])
+Для запуска надо добавить в env переменные POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, APP_PORT, WB_API_KEY.
+
+В директорию проекта нужно добавить файлы service-key.json(сервисный ключ google api), spreadsheets.json(массив айди гугл таблиц в формате string[]).
+
+Для проверки можно разкомментировать 8 строку в файле runner.ts.
 
 ## Команды:
 
